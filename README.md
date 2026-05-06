@@ -1,5 +1,6 @@
-````markdown
 <div align="center">
+
+<br>
 
 # 🎓 MUST Beamer Template
 
@@ -1022,6 +1023,8 @@ beamerthemeMUST.sty
 
 本模板主要用于学习、课程展示和学术交流。
 
+如果你使用了学校校徽或相关视觉元素，请遵守澳门科技大学相关标识使用规范。
+
 > 本项目不代表澳门科技大学官方发布，仅作为 LaTeX Beamer 模板学习与交流用途。
 
 ---
@@ -1038,12 +1041,3 @@ beamerthemeMUST.sty
 - 📢 推荐给需要做 slides 的同学
 
 ---
-
-<div align="center">
-
-## 🎉 开始制作你的 MUST 风格学术报告吧！
-
-**Made with LaTeX Beamer**
-
-</div>
-````
