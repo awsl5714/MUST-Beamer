@@ -1,0 +1,289 @@
+% =============================================================
+% beamerthemeMUST.sty
+% 澳门科技大学 Beamer 主题（MUST Beamer Theme）
+% 基于 UIC 风格复刻，适配 MUST 校徽与配色
+% 编译要求：xelatex（因使用 ctex 中文支持）
+% =============================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemeMUST}[2025/01/01 MUST Beamer Theme]
+
+% --------- 中文支持（必须 xelatex/lualatex）---------
+\RequirePackage[UTF8]{ctex}
+
+% --------- 字体与微排版 ---------
+\RequirePackage{fontspec}
+\RequirePackage{microtype}
+
+% 英文字体：Fira Sans
+\RequirePackage[sfdefault, scale=0.95]{FiraSans}
+\RequirePackage[scale=0.95]{FiraMono}
+
+% 中文字体：FandolSans（TeX Live 自带开源黑体）
+\setCJKsansfont{FandolSans-Regular.otf}[
+  BoldFont   = FandolSans-Bold.otf,
+  ItalicFont = FandolSans-Regular.otf
+]
+
+% --------- 常用宏包 ---------
+\RequirePackage{tikz}
+\usetikzlibrary{calc, positioning, shapes.geometric, backgrounds}
+\RequirePackage{booktabs}
+\RequirePackage{graphicx}
+\RequirePackage{amsmath, amssymb, amsthm}
+\RequirePackage{xcolor}
+\RequirePackage{multirow}
+\RequirePackage{array}
+\RequirePackage{pifont}
+
+% =============================================================
+% 配色方案
+% =============================================================
+\definecolor{mustblue}{HTML}{001E62}        % 主色（深蓝）
+\definecolor{mustred}{HTML}{D50032}         % 辅色（红）
+\definecolor{mustlightblue}{HTML}{4FB3E8}   % 浅蓝
+\definecolor{mustteal}{HTML}{1E83A0}        % 青色
+\definecolor{mustgold}{HTML}{F2A900}        % 金色
+\definecolor{mustwhite}{HTML}{F1F1E6}       % 米白
+\definecolor{mustgray}{HTML}{53565A}        % 灰色
+\definecolor{musttext}{HTML}{001E62}        % 正文色
+\definecolor{mustgreen}{HTML}{2E7D32}       % 成功色
+\definecolor{mustwarn}{HTML}{C62828}        % 警告色
+
+% =============================================================
+% Logo 路径配置
+% =============================================================
+\newcommand{\mustlogo}{figures/school_logo.png}
+
+% =============================================================
+% 主题配色
+% =============================================================
+\setbeamercolor{normal text}{fg=musttext, bg=white}
+\setbeamercolor{alerted text}{fg=mustred}
+\setbeamercolor{example text}{fg=mustteal}
+\setbeamercolor{structure}{fg=mustblue}
+\setbeamercolor{frametitle}{fg=mustblue, bg=white}
+\setbeamercolor{title}{fg=white}
+\setbeamercolor{subtitle}{fg=white}
+\setbeamercolor{author}{fg=white}
+\setbeamercolor{date}{fg=white}
+\setbeamercolor{institute}{fg=white}
+\setbeamercolor{itemize item}{fg=mustblue}
+\setbeamercolor{itemize subitem}{fg=mustblue}
+\setbeamercolor{enumerate item}{fg=mustblue}
+\setbeamercolor{block title}{fg=mustblue, bg=mustblue!6}
+\setbeamercolor{block body}{fg=musttext, bg=mustblue!4}
+\setbeamercolor{block title alerted}{fg=mustred, bg=mustred!6}
+\setbeamercolor{block body alerted}{fg=musttext, bg=mustred!4}
+\setbeamercolor{block title example}{fg=mustteal, bg=mustteal!6}
+\setbeamercolor{block body example}{fg=musttext, bg=mustteal!4}
+
+% =============================================================
+% 字体设置
+% =============================================================
+\usefonttheme{professionalfonts}
+\setbeamerfont{frametitle}{size=\Large, series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\small, series=\mdseries}
+\setbeamerfont{title}{size=\LARGE, series=\bfseries}
+\setbeamerfont{subtitle}{size=\normalsize, series=\mdseries, shape=\itshape}
+\setbeamerfont{block title}{series=\bfseries}
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subbody}{size=\small}
+
+% --------- 列表符号 ---------
+\setbeamertemplate{itemize item}{\textcolor{mustblue}{$\bullet$}}
+\setbeamertemplate{itemize subitem}{\textcolor{mustblue}{---}}
+\setbeamertemplate{itemize subsubitem}{\textcolor{mustblue}{$\circ$}}
+
+% =============================================================
+% 页眉（frametitle）— tikz overlay 绝对定位
+% =============================================================
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth, ht=1.45cm, dp=0cm]{frametitle}%
+    \begin{tikzpicture}[remember picture, overlay]
+      % Logo
+      \node[anchor=west, inner sep=0pt]
+        at ([xshift=0.45cm, yshift=-0.7cm]current page.north west)
+        {\includegraphics[height=0.85cm]{\mustlogo}};
+      % 竖线分隔符
+      \draw[mustblue, line width=1.2pt]
+        ([xshift=1.65cm, yshift=-0.28cm]current page.north west) --
+        ([xshift=1.65cm, yshift=-1.12cm]current page.north west);
+      % 标题 + 副标题
+      \node[anchor=west, inner sep=0pt, text width=0.80\paperwidth, align=left]
+        at ([xshift=1.95cm, yshift=-0.7cm]current page.north west)
+        {%
+          {\usebeamerfont{frametitle}\color{mustblue}\insertframetitle}%
+          \ifx\insertframesubtitle\@empty\else%
+            \\[-0.1em]%
+            {\usebeamerfont{framesubtitle}\color{mustgray}\insertframesubtitle}%
+          \fi%
+        };
+      % 装饰线（蓝 + 红）
+      \fill[mustblue]
+        ([yshift=-1.4cm]current page.north west) rectangle
+        ([xshift=0.82\paperwidth, yshift=-1.42cm]current page.north west);
+      \fill[mustred]
+        ([xshift=0.82\paperwidth, yshift=-1.4cm]current page.north west) rectangle
+        ([yshift=-1.42cm]current page.north east);
+    \end{tikzpicture}%
+  \end{beamercolorbox}%
+}
+
+% =============================================================
+% Block 样式（左侧竖条）
+% =============================================================
+% --- 普通 block ---
+\setbeamertemplate{block begin}{%
+  \vspace{0.3em}
+  \begin{beamercolorbox}[wd=\textwidth, rounded=false, shadow=false]{block title}%
+    \hspace{3pt}\rule[-0.4em]{2.5pt}{1.2em}\hspace{6pt}%
+    \usebeamerfont{block title}\insertblocktitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=\textwidth, rounded=false, shadow=false,
+      leftskip=11pt, rightskip=4pt, vmode]{block body}%
+    \usebeamerfont{block body}\vspace{0.3em}%
+}
+\setbeamertemplate{block end}{%
+    \vspace{0.3em}
+  \end{beamercolorbox}%
+  \vspace{0.3em}
+}
+
+% --- alertblock ---
+\setbeamertemplate{block alerted begin}{%
+  \vspace{0.3em}
+  \begin{beamercolorbox}[wd=\textwidth, rounded=false, shadow=false]{block title alerted}%
+    \hspace{3pt}\rule[-0.4em]{2.5pt}{1.2em}\hspace{6pt}%
+    \usebeamerfont{block title}\insertblocktitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=\textwidth, rounded=false, shadow=false,
+      leftskip=11pt, rightskip=4pt, vmode]{block body alerted}%
+    \usebeamerfont{block body}\vspace{0.3em}%
+}
+\setbeamertemplate{block alerted end}{%
+    \vspace{0.3em}
+  \end{beamercolorbox}%
+  \vspace{0.3em}
+}
+
+% --- exampleblock ---
+\setbeamertemplate{block example begin}{%
+  \vspace{0.3em}
+  \begin{beamercolorbox}[wd=\textwidth, rounded=false, shadow=false]{block title example}%
+    \hspace{3pt}\rule[-0.4em]{2.5pt}{1.2em}\hspace{6pt}%
+    \usebeamerfont{block title}\insertblocktitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=\textwidth, rounded=false, shadow=false,
+      leftskip=11pt, rightskip=4pt, vmode]{block body example}%
+    \usebeamerfont{block body}\vspace{0.3em}%
+}
+\setbeamertemplate{block example end}{%
+    \vspace{0.3em}
+  \end{beamercolorbox}%
+  \vspace{0.3em}
+}
+
+% 隐藏导航条
+\setbeamertemplate{navigation symbols}{}
+
+% =============================================================
+% 底部页码条
+% =============================================================
+\setbeamertemplate{footline}{%
+  \hfill{\color{mustgray}\footnotesize\insertframenumber\,/\,\inserttotalframenumber}%
+  \hspace{0.5cm}\vspace{0.3cm}%
+}
+
+% =============================================================
+% 自定义快捷符号
+% =============================================================
+\newcommand{\cmark}{\textcolor{mustgreen}{\ding{51}}}
+\newcommand{\xmark}{\textcolor{mustred}{\ding{55}}}
+\newcommand{\warn}{\textcolor{mustgold}{$\triangle$}}
+
+% =============================================================
+% 封面页（对角切割）
+% =============================================================
+\newcommand{\musttitlepage}{%
+  \begin{frame}[plain, noframenumbering]
+    \begin{tikzpicture}[remember picture, overlay]
+      % 右侧深蓝色对角区域
+      \fill[mustblue]
+        ([xshift=0.65\paperwidth, yshift=0]current page.south west) --
+        ([xshift=0.55\paperwidth, yshift=\paperheight]current page.south west) --
+        ([xshift=\paperwidth, yshift=\paperheight]current page.south west) --
+        ([xshift=\paperwidth, yshift=0]current page.south west) -- cycle;
+      % 左侧标题区
+      \node[anchor=west, text width=0.55\paperwidth, align=left, inner sep=0pt]
+        at ([xshift=0.05\paperwidth, yshift=0.5\paperheight]current page.south west) {%
+          {\color{mustblue}\Huge\bfseries\inserttitle\par}
+          \vspace{0.4cm}
+          {\color{mustgray}\large\itshape\insertsubtitle\par}
+          \vspace{0.7cm}
+          {\color{musttext}\normalsize\insertauthor\par}
+          \vspace{0.15cm}
+          {\color{mustgray}\small\insertinstitute\par}
+          \vspace{0.15cm}
+          {\color{mustgray}\small\insertdate\par}
+        };
+      % 右侧 logo 区
+      \node[anchor=center, text width=0.32\paperwidth, align=center]
+        at ([xshift=0.83\paperwidth, yshift=0.5\paperheight]current page.south west) {%
+          \includegraphics[height=2.0cm]{\mustlogo}\\[0.4cm]
+          {\color{white}\Large\bfseries 澳门科技大学}\\[0.2cm]
+          {\color{white}\footnotesize MACAU UNIVERSITY OF\\SCIENCE AND TECHNOLOGY}
+        };
+    \end{tikzpicture}
+  \end{frame}
+}
+
+% =============================================================
+% 章节分隔页（左蓝右浅色，对角切割）
+% =============================================================
+\newcommand{\mustsection}[2]{%
+  % #1: 章节标题  #2: 副标题
+  \begin{frame}[plain, noframenumbering]
+    \begin{tikzpicture}[remember picture, overlay]
+      % 左侧深蓝对角块
+      \fill[mustblue]
+        ([xshift=0, yshift=0]current page.south west) --
+        ([xshift=0, yshift=\paperheight]current page.south west) --
+        ([xshift=0.55\paperwidth, yshift=\paperheight]current page.south west) --
+        ([xshift=0.45\paperwidth, yshift=0]current page.south west) -- cycle;
+      % 右侧浅色背景
+      \fill[mustwhite]
+        ([xshift=0.55\paperwidth, yshift=\paperheight]current page.south west) --
+        ([xshift=\paperwidth, yshift=\paperheight]current page.south west) --
+        ([xshift=\paperwidth, yshift=0]current page.south west) --
+        ([xshift=0.45\paperwidth, yshift=0]current page.south west) -- cycle;
+      % 章节标题
+      \node[anchor=west, text width=0.4\paperwidth, align=left, inner sep=0pt]
+        at ([xshift=0.05\paperwidth, yshift=0.55\paperheight]current page.south west) {%
+          {\color{white}\huge\bfseries #1\par}
+          \vspace{0.8cm}
+          {\color{white}\itshape\large #2\par}
+        };
+      % 右侧 logo
+      \node[anchor=center] at ([xshift=0.78\paperwidth, yshift=0.45\paperheight]current page.south west)
+        {\includegraphics[height=2.0cm]{\mustlogo}};
+    \end{tikzpicture}
+  \end{frame}
+}
+
+% =============================================================
+% 结尾页（全蓝 Thank you）
+% =============================================================
+\newcommand{\mustthankspage}[1]{%
+  \begin{frame}[plain, noframenumbering]
+    \begin{tikzpicture}[remember picture, overlay]
+      \fill[mustblue] (current page.south west) rectangle (current page.north east);
+      \node[anchor=north west, inner sep=0pt] at ([xshift=0.5cm, yshift=-0.5cm]current page.north west)
+        {\includegraphics[height=1.3cm]{\mustlogo}};
+      \node[anchor=center] at (current page.center)
+        {\color{white}\Huge #1};
+    \end{tikzpicture}
+  \end{frame}
+}
+
+\endinput
