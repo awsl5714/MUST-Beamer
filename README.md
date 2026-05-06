@@ -797,8 +797,6 @@ beamerthemeMUST.sty
 ---
 
 ## 🛠️ 常见问题 FAQ
-
-<details>
 <summary>❓ 为什么一定要用 XeLaTeX？</summary>
 
 因为模板使用了中文支持和字体设置，例如：
@@ -810,11 +808,10 @@ fontspec
 
 这些内容需要使用 `XeLaTeX` 编译。如果使用 `pdfLaTeX`，很可能会出现中文乱码或字体报错。
 
-</details>
 
 ---
 
-<details>
+
 <summary>❓ 编译后中文乱码怎么办？</summary>
 
 请确认你使用的是：
@@ -831,11 +828,12 @@ pdfLaTeX
 
 如果仍然乱码，请检查你的 LaTeX 发行版是否完整安装了中文字体支持。
 
-</details>
+
 
 ---
 
-<details>
+
+    
 <summary>❓ 为什么图片显示不出来？</summary>
 
 请检查：
@@ -851,11 +849,12 @@ pdfLaTeX
 \includegraphics{figures/school_logo.png}
 ```
 
-</details>
+
 
 ---
 
-<details>
+
+    
 <summary>❓ 为什么参考文献不显示？</summary>
 
 请确认你已经运行了完整编译流程：
@@ -869,11 +868,12 @@ xelatex main.tex
 
 如果只运行一次 `xelatex`，参考文献通常不会完整显示。
 
-</details>
+
 
 ---
 
-<details>
+
+    
 <summary>❓ 表格太宽超出页面怎么办？</summary>
 
 可以缩小表格：
@@ -891,11 +891,12 @@ xelatex main.tex
 }
 ```
 
-</details>
+
 
 ---
 
-<details>
+
+    
 <summary>❓ Overleaf 编译失败怎么办？</summary>
 
 请检查：
@@ -906,11 +907,12 @@ xelatex main.tex
 4. 是否包含 `figures/school_logo.png`
 5. 是否包含 `sections/` 文件夹
 
-</details>
+
 
 ---
 
-<details>
+
+    
 <summary>❓ 我只想快速改成自己的汇报，需要改哪些地方？</summary>
 
 最少只需要改：
@@ -928,7 +930,7 @@ sections/experiment.tex
 beamerthemeMUST.sty
 ```
 
-</details>
+
 
 ---
 
